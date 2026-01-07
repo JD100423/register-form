@@ -1,9 +1,11 @@
 'use client';
+import styles from "./VisitorForm.module.css"
 import React, { useState } from "react";
 import Image from "next/image";
 import SignaturePad from "./SignaturePad";
 import Footer from "./Footer";
 import Logo from "../src/images/logo.png";
+
 
 type FormState = {
     fecha: string;
@@ -18,6 +20,34 @@ type FormState = {
     horaSalida: string;
     firmaDataUrl: string | null;
 };
+
+function saveVisitorToStorage(data: FormState) {
+    try {
+        const raw = localStorage.getItem("visitors") || "{}";
+        const visitors = JSON.parse(raw);
+        visitors[data.cedula] = { ...data, savedAt: new Date().toISOString() };
+        localStorage.setItem("visitors", JSON.stringify(visitors));
+    } catch (err) {
+        console.error("Error saving visitor", err);
+    }
+}
+
+async function postVisitorToApi(data: FormState) {
+    try {
+        const res = await fetch('/api/visitors', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        if (!res.ok) {
+            const txt = await res.text();
+            throw new Error(txt || `HTTP ${res.status}`);
+        }
+        return res.json();
+    } catch (err) {
+        throw err;
+    }
+}
 
 export default function VisitorForm() {
     const today = new Date().toISOString().slice(0, 10);
@@ -59,21 +89,42 @@ export default function VisitorForm() {
         e.preventDefault();
         if (!validate()) return;
 
-        console.log("Registro visitante:", form);
-        alert("Registro guardado.");
+        (async () => {
+            try {
+                await postVisitorToApi(form);
+                alert('Registro guardado en servidor.');
+            } catch (err) {
+                console.error('API POST failed, falling back to localStorage', err);
+                saveVisitorToStorage(form);
+                alert('Registro guardado localmente (API no disponible).');
+            }
+
+            setForm(prev => ({
+                ...prev,
+                nombre: "",
+                cedula: "",
+                empresa: "",
+                correo: "",
+                area: "",
+                servicio: "",
+                carnetVisita: false,
+                horaSalida: "",
+                firmaDataUrl: null,
+            }));
+        })();
     }
 
     return ( 
-        <div className="form-container">
-            <header className="form-header">
-                <Image src={Logo} alt="Logo Empresa" className="header-logo" />
+        <div className={styles.formContainer}>
+            <header className={styles.formHeader}>
+                <Image src={Logo} alt="Logo Empresa" className={styles.headerLogo} />
                 <h1>Registro de Visitantes</h1>
-                <p className="header-subtitle">Bienvenido al Ministerio de Agricultura</p>
+                <p className={styles.headerSubtitle}>Bienvenido al Ministerio de Agricultura</p>
             </header>
             
-            <form onSubmit={handleSubmit} className="visitor-form">
+            <form onSubmit={handleSubmit} className={styles.visitorForm}>
 
-            <div className="form-row">
+            <div className={styles.formRow}>
                 <label>
                     Fecha:
                     <input type="date" value={form.fecha} onChange={e => handleChange("fecha", e.target.value)} />
@@ -87,42 +138,41 @@ export default function VisitorForm() {
             <label>
                 Nombre Completo:
                 <input type="text" value={form.nombre} onChange={e => handleChange("nombre", e.target.value)} />
-                {errors.nombre && <div className="error-message">{errors.nombre}</div>}
+                {errors.nombre && <div className={styles.errorMessage}>{errors.nombre}</div>}
             </label>
 
-            <div className="form-row">
+            <div className={styles.formRow}>
                 <label>
                     Cédula / Pasaporte:
                     <input type="text" value={form.cedula} onChange={e => handleChange("cedula", e.target.value)} />
-                    {errors.cedula && <div className="error-message">{errors.cedula}</div>}
+                    {errors.cedula && <div className={styles.errorMessage}>{errors.cedula}</div>}
                 </label>
                 <label>
                     Empresa:
                     <input type="text" value={form.empresa} onChange={e => handleChange("empresa", e.target.value)} />
-                    {errors.empresa && <div className="error-message">{errors.empresa}</div>}
+                    {errors.empresa && <div className={styles.errorMessage}>{errors.empresa}</div>}
                 </label>
             </div>
 
             <label>
                 Correo Electrónico:
                 <input type="email" value={form.correo} onChange={e => handleChange("correo", e.target.value)} />
-                {errors.correo && <div className="error-message">{errors.correo}</div>}
+                {errors.correo && <div className={styles.errorMessage}>{errors.correo}</div>}
             </label>
-
-            <div className="form-row">
+            <div className={styles.formRow}>
                 <label>
                     Área a Visitar:
                     <input type="text" value={form.area} onChange={e => handleChange("area", e.target.value)} />
-                    {errors.area && <div className="error-message">{errors.area}</div>}
+                    {errors.area && <div className={styles.errorMessage}>{errors.area}</div>}
                 </label>
                 <label>
                     Servicio a Realizar:
                     <input type="text" value={form.servicio} onChange={e => handleChange("servicio", e.target.value)} />
-                    {errors.servicio && <div className="error-message">{errors.servicio}</div>}
+                    {errors.servicio && <div className={styles.errorMessage}>{errors.servicio}</div>}
                 </label>
             </div>
 
-            <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <label className={styles.checkboxLabel}>
                 <input type="checkbox" checked={form.carnetVisita} onChange={e => handleChange("carnetVisita", e.target.checked)} />
                 Solicita Carnet de Visita
             </label>
@@ -139,15 +189,13 @@ export default function VisitorForm() {
                     height={140}
                     onChange={(dataUrl) => handleChange("firmaDataUrl", dataUrl)}
                 />
-                {errors.firmaDataUrl && <div className="error-message">{errors.firmaDataUrl}</div>}
+                {errors.firmaDataUrl && <div className={styles.errorMessage}>{errors.firmaDataUrl}</div>}
             </div>
 
-            <div className="form-actions">
-                <button type="submit" className="btn-primary">Guardar Registro</button>
+            <div className={styles.formActions}>
+                <button type="submit" className={styles.btnPrimary}>Guardar Registro</button>
             </div>
             </form>
-            
-            <Footer />
         </div>
     );
 }

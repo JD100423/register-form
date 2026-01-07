@@ -13,212 +13,29 @@ body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
   padding: 20px;
-}
-
-/* Form Container and Header */
-.form-container {
-  max-width: 900px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.form-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 40px 20px;
-  text-align: center;
-  border-bottom: 4px solid #764ba2;
-}
-
-.header-logo {
-  max-width: 120px;
-  height: auto;
-  margin-bottom: 20px;
-  filter: brightness(0) invert(1);
-}
-
-.form-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-}
-
-.header-subtitle {
-  font-size: 14px;
-  opacity: 0.9;
-  font-weight: 300;
-}
-
-/* Form Styles */
-.visitor-form {
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.visitor-form > div {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #333;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="date"],
-input[type="time"],
-textarea {
-  font-family: inherit;
-  padding: 12px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="date"]:focus,
-input[type="time"]:focus,
-textarea:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-  background-color: #fafbff;
-}
-
-input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: #667eea;
-}
-
-/* Two-column layout for paired fields */
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 768px) {
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Error messages */
-.error-message {
-  color: #e74c3c;
-  font-size: 12px;
-  margin-top: 4px;
-  font-weight: 500;
-}
-
-/* Signature Pad */
-.signature-pad-container {
-  border: 2px dashed #e0e0e0;
-  padding: 16px;
-  border-radius: 8px;
-  background: #fafbff;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.signature-canvas {
-  display: block;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  background: white;
-  touch-action: none;
-  cursor: crosshair;
-  width: 100%;
-  max-width: 600px;
-  height: 140px;
-}
-
-.signature-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-primary,
-.btn-secondary {
-  font-family: inherit;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-secondary {
-  background: #f0f0f0;
-  color: #333;
-  border: 1px solid #e0e0e0;
-}
-
-.btn-secondary:hover {
-  background: #e8e8e8;
-  border-color: #d0d0d0;
-}
-
-/* Form Actions */
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-}
-
-.form-actions button {
-  flex: 1;
+  padding-bottom: var(--footer-height, 140px);
 }
 
 /* Footer Styles */
 .form-footer {
+  --footer-height: 90px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 40px 20px 20px;
+  padding: 0px 16px;
   align-items: center;
   text-align: center;
   border-top: 4px solid #764ba2;
+  box-sizing: border-box;
+  min-height: var(--footer-height);
 }
 
 .footer-content {
-  max-width: 900px;
+  max-width: 400px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -255,5 +72,94 @@ input[type="checkbox"] {
   text-align: center;
   font-size: 12px;
   opacity: 0.85;
+}
+
+/* Dashboard and Card styles */
+.dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-content: center;
+  padding: 12px;
+}
+
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  width: 100%;
+  padding: 20px;
+  max-width: 700px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  background: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-height: 700px;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.card p {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.card:focus-within,
+.card-link:focus {
+  outline: 3px solid rgba(102,126,234,0.15);
+  outline-offset: 2px;
+}
+
+.card img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.card > .row,
+.card .card-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+}
+
+@media (max-width: 520px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    max-width: 100%;
+    min-height: auto;
+    padding: 16px;
+  }
 }
 

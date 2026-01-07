@@ -1,0 +1,190 @@
+/* Form Container and Header */
+.formContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.formHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  border-bottom: 4px solid #764ba2;
+}
+
+.headerLogo {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.formHeader h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.headerSubtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* Form Styles */
+.visitorForm {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.visitorForm > div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.visitorForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.visitorForm input[type="text"],
+.visitorForm input[type="email"],
+.visitorForm input[type="date"],
+.visitorForm input[type="time"],
+.visitorForm textarea {
+  font-family: inherit;
+  padding: 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.visitorForm input[type="text"]:focus,
+.visitorForm input[type="email"]:focus,
+.visitorForm input[type="date"]:focus,
+.visitorForm input[type="time"]:focus,
+.visitorForm textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background-color: #fafbff;
+}
+
+.visitorForm input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #667eea;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Two-column layout for paired fields */
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Error messages */
+.errorMessage {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Signature Pad */
+.signaturePadContainer {
+  border: 2px dashed #e0e0e0;
+  padding: 16px;
+  border-radius: 8px;
+  background: #fafbff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signatureCanvas {
+  display: block;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  background: white;
+  touch-action: none;
+  cursor: crosshair;
+  width: 100%;
+  max-width: 600px;
+  height: 140px;
+}
+
+.signatureButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.btnPrimary {
+  font-family: inherit;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btnPrimary:active {
+  transform: translateY(0);
+}
+
+.btnSecondary {
+  padding: 12px 24px;
+  border-radius: 6px;
+  background: #f0f0f0;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+/* Form Actions */
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.formActions button {
+  flex: 1;
+}
