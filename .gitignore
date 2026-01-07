@@ -37,6 +37,7 @@ env.d.ts
 
 # vercel
 .vercel
+graph.ts
 
 # typescript
 *.tsbuildinfo

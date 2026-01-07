@@ -1,13 +1,14 @@
 'use client';
 import Link from "next/link";
-import React from "react";
+import Image from "next/image";
+import React, { type ReactNode } from "react";
 import "../app/globals.css";
 
 type CardProps = {
     title: string;
     description: string;
     href: string;
-    icon: object | string;
+    icon?: string | ReactNode;
 };
 
 export default function Card({ title, description, href, icon}: CardProps) {
@@ -16,11 +17,19 @@ export default function Card({ title, description, href, icon}: CardProps) {
             <div className="card" role="button">
                 {icon && (
                     <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                        <img
-                        src={icon}
-                        alt={`${title} icon`}
-                        style={{ width: 64, height:64, objectFit: "contain" }}
-                        />
+                        {typeof icon === "string" ? (
+                            <Image
+                                src={icon}
+                                alt={`${title} icon`}
+                                width={64}
+                                height={64}
+                                style={{ objectFit: "contain" }}
+                            />
+                        ) : (
+                            <div style={{ width: 64, height: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                {icon}
+                            </div>
+                        )}
                         <div>
                             <h3>{title}</h3>
                             {description && <p>{description}</p>}
